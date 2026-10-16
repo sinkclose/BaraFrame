@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <background-plugin
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="example_palette"
+    id="maleframe"
     displayName="@string/bg_plugin_name"
     description="@string/bg_plugin_description"
-    settingsActivity="com.nxd1frnt.exampleclockdeskplugin.BackgroundSettingsActivity"
-    supportsBlur="false"
+    settingsActivity="com.multicast.bara.BackgroundSettingsActivity"
+    supportsBlur="true"
     supportsCrop="false"
     supportsWeather="true"
     supportsDimming="true" />

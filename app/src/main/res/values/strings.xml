@@ -1,20 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Example ClockDesk Plugin</string>
-    <string name="plugin_name">Example ClockDesk Plugin</string>
-    <string name="plugin_description">This is an example ClockDesk plugin.</string>
-    <string name="settings_title">Example Settings activity</string>
-
-    <!-- Background Provider Plugin Strings -->
-    <string name="bg_plugin_name">Palette Pro (Plugin)</string>
-    <string name="bg_plugin_description">External plugin delivering dynamic designer color palettes.</string>
-    <string name="bg_settings_title">Palette Pro Settings</string>
-    <string name="bg_settings_subtitle">Select an ambient background tone for ClockDesk:</string>
-    <string name="bg_color_emerald">Nordic Emerald</string>
-    <string name="bg_color_indigo">Deep Indigo</string>
-    <string name="bg_color_amber">Amber Dusk</string>
-    <string name="bg_color_crimson">Velvet Crimson</string>
-    <string name="bg_color_cyan">Cyber Cyan</string>
-    <string name="bg_color_midnight">Midnight Slate</string>
-    <string name="bg_color_amoled">Pure AMOLED</string>
-    <string name="bg_apply_toast">Background updated in ClockDesk!</string>
+    <string name="app_name" translatable="false">BaraFrame</string>
+    <string name="bg_plugin_name" translatable="false">@string/app_name</string>
+    <string name="bg_settings_title" translatable="false">@string/app_name</string>
+    <string name="source_danbooru" translatable="false">Danbooru</string>
+    <string name="source_safebooru" translatable="false">Safebooru</string>
+    <string name="bg_plugin_description">Art from Danbooru and Safebooru, with tags and scheduled background changes.</string>
+    <string name="artwork_preview">Crop preview</string>
+    <string name="empty_preview">Load an image to get started</string>
+    <string name="tags_label">Tags</string>
+    <string name="tags_help">Up to 8 tags, separated by spaces. Example: bara male_focus -comic. All tags must match; -tag excludes a tag. For BL, try shounen_ai.</string>
+    <string name="rating_label">Maximum rating</string>
+    <string name="rating_help">Includes the selected rating and lower ratings. Safebooru is always SFW. Ratings come from the source.</string>
+    <string name="sources_label">Sources</string>
+    <string name="automatic_label">Change automatically</string>
+    <string name="wifi_label">Unmetered networks only</string>
+    <string name="wifi_help">Usually Wi-Fi. Applies to manual downloads too.</string>
+    <string name="interval_label">Change every</string>
+    <string name="interval_help">Battery saver may delay changes. Select BaraFrame as the background provider in ClockDesk.</string>
+    <string name="save_settings">Save and apply</string>
+    <string name="next_artwork">Next image</string>
+    <string name="open_original">View post</string>
+    <string name="settings_saved">Settings saved</string>
+    <string name="source_required">Select at least one source.</string>
+    <string name="no_browser">No app available to open the link.</string>
+    <string name="loading_artwork">Loading image...</string>
+    <string name="waiting_network">Queued. Waiting for a connection or retry.</string>
+    <string name="artwork_caption">%1$s · %2$s\n%3$s\n%4$s</string>
+    <string name="unknown_artist">Unknown artist</string>
+    <string name="no_artwork">No image matches these settings yet.</string>
+    <string name="status_empty">Choose your tags and tap Next image.</string>
+    <string name="status_searching">Looking for an image...</string>
+    <string name="status_updated">Background updated</string>
+    <string name="status_no_results">No new images found. Try fewer tags, another aspect ratio or another source.</string>
+    <string name="status_update_failed">Could not update the background.\n%1$s</string>
+    <string name="error_tag_count">Enter 1 to 8 tags, separated by spaces.</string>
+    <string name="error_tag_syntax">Use exact tags and -exclusions. Search operators such as rating: and * are not supported.</string>
+    <string name="error_tag_required">Include at least one tag without a leading minus.</string>
+    <string name="error_tag_conflict">A tag cannot be included and excluded at the same time.</string>
+    <string name="error_url">The source returned an unsupported image URL.</string>
+    <string name="error_redirect">The source returned an invalid redirect.</string>
+    <string name="error_http">HTTP %1$s (%2$s)</string>
+    <string name="error_file_too_large">The file is too large.</string>
+    <string name="error_image_format">This image format is not supported.</string>
+    <string name="error_timeout">The download timed out.</string>
+    <string name="error_redirect_limit">Too many redirects.</string>
+    <string name="error_storage">Cannot access app storage.</string>
+    <string name="error_image_size">The image is too small or too large.</string>
+    <string name="error_image_corrupt">Cannot open the image file.</string>
+    <string name="error_image_processing">Cannot process the image.</string>
+    <string name="error_image_save">Cannot save the background.</string>
+    <string name="error_response">The source returned an invalid response.</string>
+    <string name="error_network">Connection failed. Check your network or try another source.</string>
+    <string name="error_unknown">Cannot load the image. Try again.</string>
+    <string name="aspect_label">Image proportions</string>
+    <string name="aspect_help" formatted="false">Screen matching uses the saved format, allowing up to 15% cropping. It stays fixed when you leave ClockDesk. Any ratio also allows square images.</string>
+    <string name="error_image_aspect">The image does not match the selected aspect ratio.</string>
+    <string name="crop_help">Drag the image to position it. Pinch or use the slider to zoom. ClockDesk will receive the frame shown here.</string>
+    <string name="frame_label">Frame format</string>
+    <string name="crop_reset">Reset</string>
+    <string name="crop_apply">Apply crop</string>
+    <string name="crop_dirty">Crop changes have not been applied.</string>
+    <string name="crop_saving">Saving crop...</string>
+    <string name="cancel_refresh">Cancel download</string>
+    <string name="open_clockdesk">Open ClockDesk</string>
+    <string name="clockdesk_missing">Install ClockDesk to use this background. You can still download and frame images here.</string>
+    <string name="status_crop_applied">Crop applied</string>
+    <string name="status_crop_stale">The image changed. Adjust the new image and apply again.</string>
+    <string name="status_cancelled">Download cancelled. The current background is unchanged.</string>
+    <string-array name="rating_options">
+        <item>SFW only</item>
+        <item>Suggestive (Sensitive)</item>
+        <item>Nudity (Questionable)</item>
+        <item>All ratings (Explicit)</item>
+    </string-array>
+    <string-array name="rating_labels">
+        <item>SFW</item>
+        <item>Sensitive</item>
+        <item>Questionable</item>
+        <item>Explicit</item>
+    </string-array>
+    <string-array name="interval_options">
+        <item>15 minutes</item>
+        <item>1 hour</item>
+        <item>6 hours</item>
+        <item>24 hours</item>
+    </string-array>
+    <string-array name="aspect_options">
+        <item>Match screen</item>
+        <item>Landscape</item>
+        <item>Portrait</item>
+        <item>Any ratio</item>
+    </string-array>
+    <string-array name="frame_options">
+        <item>Saved screen format</item>
+        <item>16:9 landscape</item>
+        <item>9:16 portrait</item>
+        <item>4:3 landscape</item>
+        <item>3:4 portrait</item>
+        <item>Image proportions</item>
+    </string-array>
+    <string name="capture_screen">Use current screen size</string>
+    <string name="section_crop">Frame</string>
+    <string name="section_discovery">Find artwork</string>
+    <string name="section_rotation">Automatic changes</string>
+    <string name="zoom_label">Zoom</string>
+    <string name="zoom_value">%1$.1f×</string>
 </resources>

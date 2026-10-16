@@ -1,75 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <queries><package android:name="com.nxd1frnt.clockdesk2" /></queries>
     <application
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:icon="@android:drawable/sym_def_app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:localeConfig="@xml/locales_config"
+        android:roundIcon="@android:drawable/sym_def_app_icon"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ExampleClockDeskPlugin" >
-
-        <activity
-            android:name=".ExamplePluginDetailsActivity"
-            android:exported="true"
-            android:theme="@style/Theme.ExampleClockDeskPlugin.Dialog" />
-
-        <activity
-            android:name=".SettingsActivity"
-            android:exported="true"
-            android:theme="@style/Theme.ExampleClockDeskPlugin.Settings" />
-
-
-        <receiver
-            android:name=".ExampleChipReceiver"
-            android:exported="true">
-
-            <!-- Filter for the initial query from ClockDesk -->
+        android:usesCleartextTraffic="false"
+        android:theme="@style/Theme.BaraFrame">
+        <activity android:name=".BackgroundSettingsActivity" android:exported="true" android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.BaraFrame">
             <intent-filter>
-                <action android:name="com.nxd1frnt.clockdesk2.ACTION_QUERY_SMART_CHIPS" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <!-- Filter for the data request from ClockDesk -->
+        </activity>
+        <receiver android:name=".ExampleBackgroundReceiver" android:exported="true">
             <intent-filter>
-                <action android:name="com.nxd1frnt.clockdesk2.ACTION_REQUEST_CHIP_DATA" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
-
-            <!--
-            This meta-data links to the XML file that provides
-            information about your plugin (like its name for the settings screen).
-            -->
-            <meta-data
-                android:name="com.nxd1frnt.clockdesk2.smartchip.PLUGIN_RECEIVER"
-                android:resource="@xml/plugin_info" />
-        </receiver>
-
-        <!-- Background Provider Plugin Receiver -->
-        <receiver
-            android:name=".ExampleBackgroundReceiver"
-            android:exported="true">
-
-            <!-- ClockDesk background plugin discovery -->
             <intent-filter>
                 <action android:name="com.nxd1frnt.clockdesk2.ACTION_QUERY_BACKGROUND_PLUGINS" />
-            </intent-filter>
-
-            <!-- ClockDesk background data request -->
-            <intent-filter>
                 <action android:name="com.nxd1frnt.clockdesk2.ACTION_REQUEST_BACKGROUND_DATA" />
             </intent-filter>
-
-            <meta-data
-                android:name="com.nxd1frnt.clockdesk2.background.PLUGIN_RECEIVER"
+            <meta-data android:name="com.nxd1frnt.clockdesk2.background.PLUGIN_RECEIVER"
                 android:resource="@xml/background_plugin_info" />
         </receiver>
-
-        <!-- Background Provider Plugin Settings -->
-        <activity
-            android:name=".BackgroundSettingsActivity"
-            android:exported="true"
-            android:theme="@style/Theme.ExampleClockDeskPlugin.Settings" />
+        <provider android:name=".ArtworkContentProvider" android:authorities="${applicationId}.artwork"
+            android:exported="false" android:grantUriPermissions="true">
+        </provider>
     </application>
 </manifest>

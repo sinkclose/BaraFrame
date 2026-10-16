@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Example ClockDesk Plugin"
+rootProject.name = "BaraFrame"
 include(":app")
- 
+

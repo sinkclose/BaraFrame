@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bg_plugin_description">Арты из Danbooru и Safebooru. Поиск по тегам и смена фона по расписанию.</string>
+    <string name="artwork_preview">Предпросмотр кадра</string>
+    <string name="empty_preview">Загрузите первый арт</string>
+    <string name="tags_label">Теги</string>
+    <string name="tags_help">До 8 тегов через пробел. Например: bara male_focus -comic. Все теги обязательны, -тег исключает. Для BL попробуйте shounen_ai.</string>
+    <string name="rating_label">Максимальный рейтинг</string>
+    <string name="rating_help">Выбранный рейтинг и всё ниже. Safebooru всегда SFW. Рейтинг берётся с сайта.</string>
+    <string name="sources_label">Источники</string>
+    <string name="automatic_label">Менять автоматически</string>
+    <string name="wifi_label">Только безлимитная сеть</string>
+    <string name="wifi_help">Обычно это Wi-Fi. Действует и при ручной загрузке.</string>
+    <string name="interval_label">Интервал</string>
+    <string name="interval_help">Энергосбережение может задержать смену. В настройках фона ClockDesk выберите BaraFrame.</string>
+    <string name="save_settings">Сохранить и применить</string>
+    <string name="next_artwork">Следующий арт</string>
+    <string name="open_original">Открыть пост</string>
+    <string name="settings_saved">Настройки сохранены</string>
+    <string name="source_required">Выберите хотя бы один источник.</string>
+    <string name="no_browser">Нет приложения для открытия ссылки.</string>
+    <string name="loading_artwork">Загружаем арт...</string>
+    <string name="waiting_network">В очереди. Ждём сеть или повторяем загрузку.</string>
+    <string name="artwork_caption">%1$s · %2$s\n%3$s\n%4$s</string>
+    <string name="unknown_artist">Автор не указан</string>
+    <string name="no_artwork">Пока нет арта под эти настройки.</string>
+    <string name="status_empty">Укажите теги и нажмите «Следующий арт».</string>
+    <string name="status_searching">Ищем арт...</string>
+    <string name="status_updated">Фон обновлён</string>
+    <string name="status_no_results">Новых артов не нашлось. Попробуйте меньше тегов, другие пропорции или другой источник.</string>
+    <string name="status_update_failed">Не удалось обновить фон.\n%1$s</string>
+    <string name="error_tag_count">Укажите от 1 до 8 тегов через пробел.</string>
+    <string name="error_tag_syntax">Используйте теги и -исключения. Операторы вроде rating: и * не поддерживаются.</string>
+    <string name="error_tag_required">Нужен хотя бы один тег без минуса.</string>
+    <string name="error_tag_conflict">Один и тот же тег нельзя включить и исключить.</string>
+    <string name="error_url">Источник вернул неподдерживаемую ссылку.</string>
+    <string name="error_redirect">Источник вернул неверную переадресацию.</string>
+    <string name="error_http">HTTP %1$s (%2$s)</string>
+    <string name="error_file_too_large">Файл слишком большой.</string>
+    <string name="error_image_format">Этот формат изображения не поддерживается.</string>
+    <string name="error_timeout">Время загрузки истекло.</string>
+    <string name="error_redirect_limit">Слишком много переадресаций.</string>
+    <string name="error_storage">Хранилище приложения недоступно.</string>
+    <string name="error_image_size">Изображение слишком маленькое или слишком большое.</string>
+    <string name="error_image_corrupt">Не удалось открыть изображение.</string>
+    <string name="error_image_processing">Не удалось обработать изображение.</string>
+    <string name="error_image_save">Не удалось сохранить фон.</string>
+    <string name="error_response">Источник вернул неверный ответ.</string>
+    <string name="error_network">Ошибка соединения. Проверьте сеть или выберите другой источник.</string>
+    <string name="error_unknown">Не удалось загрузить арт. Попробуйте ещё раз.</string>
+    <string name="aspect_label">Пропорции артов</string>
+    <string name="aspect_help" formatted="false">Под экран: сохранённый формат с обрезкой до 15%. Он не меняется при сворачивании ClockDesk. Режим «Любые» разрешает и квадратные арты.</string>
+    <string name="error_image_aspect">Изображение не подходит по пропорциям.</string>
+    <string name="crop_help">Двигайте арт пальцем. Масштаб меняется двумя пальцами или ползунком. В ClockDesk попадёт кадр внутри рамки.</string>
+    <string name="frame_label">Формат кадра</string>
+    <string name="crop_reset">Сбросить</string>
+    <string name="crop_apply">Применить кадр</string>
+    <string name="crop_dirty">Изменения кадра ещё не применены.</string>
+    <string name="crop_saving">Сохраняем кадр...</string>
+    <string name="cancel_refresh">Остановить загрузку</string>
+    <string name="open_clockdesk">Открыть ClockDesk</string>
+    <string name="clockdesk_missing">Для установки фона нужен ClockDesk. Загружать и кадрировать арты можно и без него.</string>
+    <string name="status_crop_applied">Кадр применён</string>
+    <string name="status_crop_stale">Арт сменился. Настройте новый кадр и примените его.</string>
+    <string name="status_cancelled">Загрузка остановлена. Текущий фон сохранён.</string>
+    <string-array name="rating_options">
+        <item>Только SFW</item>
+        <item>С намёками (Sensitive)</item>
+        <item>Нагота (Questionable)</item>
+        <item>Все рейтинги (Explicit)</item>
+    </string-array>
+    <string-array name="rating_labels">
+        <item>SFW</item>
+        <item>Sensitive</item>
+        <item>Questionable</item>
+        <item>Explicit</item>
+    </string-array>
+    <string-array name="interval_options">
+        <item>15 минут</item>
+        <item>1 час</item>
+        <item>6 часов</item>
+        <item>24 часа</item>
+    </string-array>
+    <string-array name="aspect_options">
+        <item>Под экран</item>
+        <item>Горизонтальные</item>
+        <item>Вертикальные</item>
+        <item>Любые</item>
+    </string-array>
+    <string-array name="frame_options">
+        <item>Формат экрана</item>
+        <item>16:9 горизонтальный</item>
+        <item>9:16 вертикальный</item>
+        <item>4:3 горизонтальный</item>
+        <item>3:4 вертикальный</item>
+        <item>Как у арта</item>
+    </string-array>
+    <string name="capture_screen">Использовать размер экрана</string>
+    <string name="section_crop">Кадр</string>
+    <string name="section_discovery">Подбор артов</string>
+    <string name="section_rotation">Автосмена</string>
+    <string name="zoom_label">Масштаб</string>
+    <string name="zoom_value">%1$.1f×</string>
+</resources>

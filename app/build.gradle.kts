@@ -4,17 +4,17 @@ plugins {
 }
 
 android {
-    namespace = "com.nxd1frnt.exampleclockdeskplugin"
+    namespace = "com.multicast.bara"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.nxd1frnt.exampleclockdeskplugin"
-        minSdk = 21
+        applicationId = "com.multicast.bara"
+        minSdk = 23
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 5
+        versionName = "1.3.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,7 +41,9 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.work)
     testImplementation(libs.junit)
+    testImplementation("org.json:json:20240303")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }

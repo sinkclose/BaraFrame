@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<smart-chip-plugin
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    preferenceKey="show_example_plugin"
-    displayName="@string/plugin_name"
-    description="@string/plugin_description"
-    icon="@drawable/ic_android_black"
-    settingsActivity=".SettingsActivity" />
