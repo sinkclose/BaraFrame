@@ -56,5 +56,6 @@ for asset in assets:
     notes.append(f"| `{asset['name']}` | {size} | `{asset['sha256']}` |")
 notes.extend(["", "SHA-256 and SHA-512 checksums are included as downloadable files.", "",
               "Download the APK for your device's architecture. All four builds have the same features.", "",
+              "The plugin has no native libraries, so APKs for different ABIs can have identical sizes and hashes.", "",
               "Verify a download with `sha256sum --ignore-missing -c SHA256SUMS`.", ""])
 (dest / "RELEASE.md").write_text("\n".join(notes))
