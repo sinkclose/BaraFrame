@@ -3,6 +3,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
+val splitApks = providers.gradleProperty("splitApks").orNull == "true"
+val signingKeystore = providers.environmentVariable("BARAFRAME_KEYSTORE").orNull
+
 android {
     namespace = "com.multicast.bara"
     compileSdk {
@@ -13,15 +16,36 @@ android {
         applicationId = "com.multicast.bara"
         minSdk = 23
         targetSdk = 36
-        versionCode = 5
-        versionName = "1.3.1"
+        versionCode = providers.gradleProperty("buildVersionCode").orNull?.toInt() ?: 5
+        versionName = providers.gradleProperty("buildVersionName").orNull ?: "1.3.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        if (signingKeystore != null) {
+            create("ci") {
+                storeFile = file(signingKeystore)
+                storePassword = providers.environmentVariable("BARAFRAME_STORE_PASSWORD").get()
+                keyAlias = providers.environmentVariable("BARAFRAME_KEY_ALIAS").get()
+                keyPassword = providers.environmentVariable("BARAFRAME_KEY_PASSWORD").get()
+            }
+        }
+    }
+
+    splits {
+        abi {
+            isEnable = splitApks
+            reset()
+            include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+            isUniversalApk = false
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
+            if (signingKeystore != null) signingConfig = signingConfigs.getByName("ci")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

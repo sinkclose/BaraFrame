@@ -24,4 +24,4 @@ If an image still disappears after this update, the next check belongs in the in
 
 Host JVM tests cover crop boundaries, drag direction, pinch anchoring, limits, 500 image/frame combinations, persisted ratio selection across a landscape-to-portrait transition, old-cache migration, and allowed URI paths. Existing source parser, rating, tag and aspect tests remain part of the check. The APK is compiled and checked with Android lint.
 
-No emulator is used. Native gestures, the exact result in the installed ClockDesk, returning from Home, screen lock/unlock and reboot still need a manual device pass. An APK built from the `debug` variant is supplied for compatibility with the previously installed signing key; this is not a Play Store release signing setup.
+No emulator is used. Native gestures, the exact result in the installed ClockDesk, returning from Home, screen lock/unlock and reboot still need a manual device pass. CI builds the `release` variant using the existing signing certificate for compatibility with previously installed APKs. Signing material is stored in GitHub Actions secrets; this is not a Play Store release signing setup.
