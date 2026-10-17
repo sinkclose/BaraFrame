@@ -6,6 +6,6 @@
     description="@string/bg_plugin_description"
     settingsActivity="com.multicast.bara.BackgroundSettingsActivity"
     supportsBlur="true"
-    supportsCrop="false"
+    supportsCrop="true"
     supportsWeather="true"
     supportsDimming="true" />

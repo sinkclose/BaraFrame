@@ -17,7 +17,6 @@ object ArtworkScheduler {
     const val REFRESH = "artwork-refresh"
     const val PERIODIC = "artwork-periodic"
     const val TAG = "artwork-jobs"
-    const val CROP = "artwork-crop"
 
     private fun constraints(settings: ArtworkSettings) = Constraints.Builder()
         .setRequiredNetworkType(if (settings.wifiOnly) NetworkType.UNMETERED else NetworkType.CONNECTED).build()
@@ -25,6 +24,8 @@ object ArtworkScheduler {
     fun schedule(context: Context, update: Boolean = true) {
         val settings = ArtworkStore(context).settings()
         val manager = WorkManager.getInstance(context)
+        // Cancel pending local crop jobs left by older versions.
+        manager.cancelUniqueWork("artwork-crop")
         if (!settings.automatic) {
             manager.cancelUniqueWork(PERIODIC)
             return
@@ -41,14 +42,6 @@ object ArtworkScheduler {
             .setInputData(workDataOf("force" to force)).setConstraints(constraints(ArtworkStore(context).settings()))
             .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS).addTag(TAG).build()
         WorkManager.getInstance(context).enqueueUniqueWork(REFRESH, ExistingWorkPolicy.KEEP, work)
-    }
-
-    fun crop(context: Context, expectedFile: String, state: CropState) {
-        val crop = state.safe()
-        val work = OneTimeWorkRequestBuilder<ArtworkCropWorker>().setInputData(workDataOf(
-            "file" to expectedFile, "x" to crop.x, "y" to crop.y, "zoom" to crop.zoom, "ratio" to crop.ratio))
-            .addTag(TAG).addTag(CROP).build()
-        WorkManager.getInstance(context).enqueueUniqueWork(CROP, ExistingWorkPolicy.REPLACE, work)
     }
 
     fun cancelRefresh(context: Context) {
@@ -107,11 +100,7 @@ class ArtworkWorker(context: Context, parameters: WorkerParameters) : Worker(con
                         if (downloads >= 3 || SystemClock.elapsedRealtime() >= deadline) break@search
                         downloads++
                         val cached = try {
-                            val original = download(store, post, settings)
-                            try {
-                                ArtworkRenderer.render(store, original, CropState(ratio = settings.frame.ratio(
-                                    settings.screenRatio, original.post.width.toDouble() / original.post.height)))
-                            } catch (e: Exception) { File(store.directory, original.fileName).delete(); throw e }
+                            download(store, post, settings)
                         } catch (e: Exception) {
                             downloadFailed = true
                             lastError = ArtworkFailure.from(e)
@@ -122,13 +111,12 @@ class ArtworkWorker(context: Context, parameters: WorkerParameters) : Worker(con
                         }
                         if (!published) {
                             File(store.directory, cached.fileName).delete()
-                            File(store.directory, cached.displayFileName).delete()
                             stopResult(settings, store)?.let { return@synchronized it }
                             store.status(ArtworkMessage.SAVE_FAILED)
                             return@synchronized Result.failure()
                         }
                         ExampleBackgroundReceiver.broadcastUpdate(applicationContext)
-                        runCatching { ArtworkRenderer.prune(store) }.onFailure {
+                        runCatching { store.prune() }.onFailure {
                             Log.w("ArtworkWorker", "Could not prune old artwork", it)
                         }
                         return@synchronized Result.success()
@@ -186,33 +174,4 @@ class ArtworkWorker(context: Context, parameters: WorkerParameters) : Worker(con
         } finally { raw.delete(); temporary.delete() }
     }
 
-}
-
-class ArtworkCropWorker(context: Context, parameters: WorkerParameters) : Worker(context, parameters) {
-    override fun doWork(): Result {
-        val store = ArtworkStore(applicationContext)
-        val expected = inputData.getString("file") ?: return Result.failure()
-        val current = store.current()?.takeIf { it.fileName == expected } ?: run {
-            store.status(ArtworkMessage.CROP_STALE)
-            return Result.failure()
-        }
-        val state = CropState(inputData.getDouble("x", 0.5), inputData.getDouble("y", 0.5),
-            inputData.getDouble("zoom", 1.0), inputData.getDouble("ratio", current.crop.ratio)).safe()
-        val rendered = try { ArtworkRenderer.render(store, current, state) } catch (e: Exception) {
-            Log.w("ArtworkCrop", "Could not render crop", e)
-            if (!isStopped) store.status(ArtworkMessage.UPDATE_FAILED, ArtworkFailure(ArtworkMessage.SAVE_FAILED))
-            return Result.failure()
-        }
-        val published = synchronized(ArtworkStore.publicationLock) {
-            !isStopped && store.replaceCrop(expected, rendered)
-        }
-        if (!published) {
-            File(store.directory, rendered.displayFileName).delete()
-            if (!isStopped) store.status(ArtworkMessage.CROP_STALE)
-            return Result.failure()
-        }
-        ExampleBackgroundReceiver.broadcastUpdate(applicationContext)
-        runCatching { ArtworkRenderer.prune(store) }
-        return Result.success()
-    }
 }

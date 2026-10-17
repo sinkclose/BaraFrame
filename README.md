@@ -1,6 +1,6 @@
 # BaraFrame
 
-A ClockDesk background plugin that fetches artwork from Danbooru and Safebooru. Supports tags, rating filters, automatic updates and crop controls. SFW by default.
+A ClockDesk background plugin that fetches artwork from Danbooru and Safebooru. Supports tags, rating filters and automatic updates. Crop and position the background in ClockDesk. SFW by default.
 
 Install the APK and select **BaraFrame** as the background provider in ClockDesk.
 

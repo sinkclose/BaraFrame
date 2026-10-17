@@ -21,7 +21,7 @@ class ArtworkContentProvider : ContentProvider() {
         }
         val store = ArtworkStore(app)
         val artwork = store.current() ?: throw FileNotFoundException("No eligible background")
-        return File(store.directory, artwork.displayFileName)
+        return File(store.directory, artwork.fileName)
     }
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor = synchronized(ArtworkStore.publicationLock) {

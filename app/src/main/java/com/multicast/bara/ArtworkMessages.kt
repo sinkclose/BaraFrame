@@ -11,8 +11,6 @@ enum class ArtworkMessage(val resource: Int) {
     EMPTY(R.string.status_empty),
     SEARCHING(R.string.status_searching),
     UPDATED(R.string.status_updated),
-    CROP_APPLIED(R.string.status_crop_applied),
-    CROP_STALE(R.string.status_crop_stale),
     CANCELLED(R.string.status_cancelled),
     SAVE_FAILED(R.string.error_image_save),
     NO_RESULTS(R.string.status_no_results),

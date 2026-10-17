@@ -5,6 +5,7 @@ import android.content.ContextWrapper
 import android.content.SharedPreferences
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import org.json.JSONObject
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -52,6 +53,32 @@ class ArtworkStoreTest {
         assertEquals(original, store.current())
         assertTrue(original.post.fingerprint in store.recent())
         assertFalse(store.isDue())
+    }
+
+    @Test fun legacyCropMetadataDoesNotRequireTheRenderedFile() {
+        val original = cache()
+        val prefs = base.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
+        val legacy = JSONObject(prefs.getString("current", null)!!)
+            .put("rendered", "${UUID.randomUUID()}.jpg")
+            .put("revision", UUID.randomUUID().toString())
+            .put("crop_x", 0.2).put("crop_y", 0.8).put("crop_zoom", 3.0).put("crop_ratio", 1.0)
+        prefs.edit().putString("current", legacy.toString()).putString("status_key", "CROP_APPLIED").commit()
+
+        assertEquals(original, store.current())
+        assertEquals(base.getString(R.string.status_updated), store.status())
+        assertFalse(store.isDue())
+    }
+
+    @Test fun legacyRenderedFileCannotReplaceAMissingOriginal() {
+        val original = cache()
+        val rendered = File(store.directory, "${UUID.randomUUID()}.jpg").apply { writeBytes(byteArrayOf(2)) }
+        val prefs = base.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
+        val legacy = JSONObject(prefs.getString("current", null)!!).put("rendered", rendered.name)
+        prefs.edit().putString("current", legacy.toString()).commit()
+
+        assertEquals(original, store.current())
+        File(store.directory, original.fileName).delete()
+        assertNull(store.current())
     }
 
     @Test fun reducingRatingImmediatelyInvalidatesCachedArtwork() {

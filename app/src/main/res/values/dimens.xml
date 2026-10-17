@@ -2,5 +2,5 @@
 <resources>
     <dimen name="screen_margin">16dp</dimen>
     <dimen name="content_max_width">720dp</dimen>
-    <dimen name="crop_preview_height">280dp</dimen>
+    <dimen name="artwork_preview_height">280dp</dimen>
 </resources>

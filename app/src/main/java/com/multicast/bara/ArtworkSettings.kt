@@ -17,8 +17,7 @@ data class ArtworkSettings(
     val wifiOnly: Boolean = true,
     val intervalMinutes: Long = 360,
     val aspect: ArtworkAspect = ArtworkAspect.SCREEN,
-    val screenRatio: Double = 16.0 / 9.0,
-    val frame: ArtworkFrame = ArtworkFrame.SCREEN
+    val screenRatio: Double = 16.0 / 9.0
 ) {
     val sources get() = ArtworkSource.entries.filter {
         if (it == ArtworkSource.DANBOORU) danbooru else safebooru
@@ -28,13 +27,8 @@ data class ArtworkSettings(
 data class CachedArtwork(
     val post: ArtworkPost,
     val fileName: String,
-    val savedAt: Long,
-    val renderedFileName: String? = null,
-    val crop: CropState = CropState(),
-    val revision: String = fileName
-) {
-    val displayFileName get() = renderedFileName ?: fileName
-}
+    val savedAt: Long
+)
 
 class ArtworkStore(private val context: Context) {
     companion object { val publicationLock = Any() }
@@ -51,8 +45,7 @@ class ArtworkStore(private val context: Context) {
         intervalMinutes = prefs.getLong("interval", 360).coerceIn(15, 1440),
         aspect = ArtworkAspect.entries.firstOrNull { it.name == prefs.getString("aspect", null) }
             ?: ArtworkAspect.SCREEN,
-        screenRatio = savedScreenRatio(),
-        frame = ArtworkFrame.entries.firstOrNull { it.name == prefs.getString("frame", null) } ?: ArtworkFrame.SCREEN
+        screenRatio = savedScreenRatio()
     )
 
     fun save(settings: ArtworkSettings) = synchronized(publicationLock) {
@@ -60,7 +53,7 @@ class ArtworkStore(private val context: Context) {
             .putBoolean("danbooru", settings.danbooru).putBoolean("safebooru", settings.safebooru)
             .putBoolean("automatic", settings.automatic).putBoolean("wifi", settings.wifiOnly)
             .putLong("interval", settings.intervalMinutes).putString("aspect", settings.aspect.name)
-            .putString("screen_ratio", settings.screenRatio.toString()).putString("frame", settings.frame.name).apply()
+            .putString("screen_ratio", settings.screenRatio.toString()).remove("frame").apply()
     }
 
     fun current(): CachedArtwork? = runCatching {
@@ -75,11 +68,9 @@ class ArtworkStore(private val context: Context) {
         val settings = settings()
         if (source !in settings.sources || !ArtworkPolicy.accepts(post, TagQuery.parse(settings.tags),
                 settings.rating, settings.aspect, settings.screenRatio)) return null
-        val rendered = json.optString("rendered").takeIf { it.matches(Regex("[a-f0-9-]+\\.jpg")) }
-        val crop = CropState(json.optDouble("crop_x", 0.5), json.optDouble("crop_y", 0.5),
-            json.optDouble("crop_zoom", 1.0), json.optDouble("crop_ratio", settings.frame.ratio(settings.screenRatio, post.width.toDouble() / post.height))).safe()
-        CachedArtwork(post, fileName, json.getLong("saved"), rendered, crop, json.optString("revision", fileName))
-            .takeIf { File(directory, it.fileName).isFile && File(directory, it.displayFileName).isFile }
+        // Ignore crop metadata from older versions and serve the complete source image.
+        CachedArtwork(post, fileName, json.getLong("saved"))
+            .takeIf { File(directory, it.fileName).isFile }
     }.getOrNull()
 
     /** File is fully written and renamed before its metadata is committed. */
@@ -90,9 +81,6 @@ class ArtworkStore(private val context: Context) {
             .put("tags", p.tags.joinToString(" ")).put("image", p.imageUrl).put("page", p.pageUrl)
             .put("artist", p.artist).put("width", p.width).put("height", p.height)
             .put("file", artwork.fileName).put("saved", artwork.savedAt)
-            .put("rendered", artwork.renderedFileName).put("revision", artwork.revision)
-            .put("crop_x", artwork.crop.x).put("crop_y", artwork.crop.y)
-            .put("crop_zoom", artwork.crop.zoom).put("crop_ratio", artwork.crop.ratio)
     }
 
     fun setCurrent(artwork: CachedArtwork): Boolean = synchronized(publicationLock) {
@@ -105,10 +93,10 @@ class ArtworkStore(private val context: Context) {
             .remove("status").remove("error_key").remove("error_args").commit()
     }
 
-    fun replaceCrop(expectedFile: String, artwork: CachedArtwork): Boolean = synchronized(publicationLock) {
-        if (current()?.fileName != expectedFile) return@synchronized false
-        prefs.edit().putString("current", encode(artwork).toString())
-            .putString("status_key", ArtworkMessage.CROP_APPLIED.name).commit()
+    fun prune() = synchronized(publicationLock) {
+        val current = current() ?: return@synchronized
+        directory.listFiles()?.filter { it.name != current.fileName }
+            ?.sortedByDescending { it.lastModified() }?.drop(6)?.forEach { it.delete() }
     }
 
     fun recent(): List<String> = prefs.getString("recent", "").orEmpty().lines().filter(String::isNotBlank)

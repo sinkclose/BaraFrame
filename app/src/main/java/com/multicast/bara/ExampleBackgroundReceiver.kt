@@ -32,7 +32,7 @@ class ExampleBackgroundReceiver : BroadcastReceiver() {
             }
             if (cached != null) {
                 val root = Uri.parse("content://${context.packageName}.artwork/background/")
-                val uri = root.buildUpon().appendPath("current.jpg").appendQueryParameter("rev", cached.revision).build()
+                val uri = root.buildUpon().appendPath("current.jpg").appendQueryParameter("rev", cached.fileName).build()
                 try {
                     val flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_PREFIX_URI_PERMISSION
                     context.grantUriPermission(CLOCKDESK_PACKAGE, root, flags)

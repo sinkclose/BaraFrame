@@ -6,7 +6,7 @@
     <string name="source_danbooru" translatable="false">Danbooru</string>
     <string name="source_safebooru" translatable="false">Safebooru</string>
     <string name="bg_plugin_description">Art from Danbooru and Safebooru, with tags and scheduled background changes.</string>
-    <string name="artwork_preview">Crop preview</string>
+    <string name="artwork_preview">Artwork preview</string>
     <string name="empty_preview">Load an image to get started</string>
     <string name="tags_label">Tags</string>
     <string name="tags_help">Up to 8 tags, separated by spaces. Example: bara male_focus -comic. All tags must match; -tag excludes a tag. For BL, try shounen_ai.</string>
@@ -56,17 +56,10 @@
     <string name="aspect_label">Image proportions</string>
     <string name="aspect_help" formatted="false">Screen matching uses the saved format, allowing up to 15% cropping. It stays fixed when you leave ClockDesk. Any ratio also allows square images.</string>
     <string name="error_image_aspect">The image does not match the selected aspect ratio.</string>
-    <string name="crop_help">Drag the image to position it. Pinch or use the slider to zoom. ClockDesk will receive the frame shown here.</string>
-    <string name="frame_label">Frame format</string>
-    <string name="crop_reset">Reset</string>
-    <string name="crop_apply">Apply crop</string>
-    <string name="crop_dirty">Crop changes have not been applied.</string>
-    <string name="crop_saving">Saving crop...</string>
+    <string name="preview_help">Crop and position the background in ClockDesk.</string>
     <string name="cancel_refresh">Cancel download</string>
     <string name="open_clockdesk">Open ClockDesk</string>
-    <string name="clockdesk_missing">Install ClockDesk to use this background. You can still download and frame images here.</string>
-    <string name="status_crop_applied">Crop applied</string>
-    <string name="status_crop_stale">The image changed. Adjust the new image and apply again.</string>
+    <string name="clockdesk_missing">Install ClockDesk to use this background. You can still download images here.</string>
     <string name="status_cancelled">Download cancelled. The current background is unchanged.</string>
     <string-array name="rating_options">
         <item>SFW only</item>
@@ -92,18 +85,8 @@
         <item>Portrait</item>
         <item>Any ratio</item>
     </string-array>
-    <string-array name="frame_options">
-        <item>Saved screen format</item>
-        <item>16:9 landscape</item>
-        <item>9:16 portrait</item>
-        <item>4:3 landscape</item>
-        <item>3:4 portrait</item>
-        <item>Image proportions</item>
-    </string-array>
     <string name="capture_screen">Use current screen size</string>
-    <string name="section_crop">Frame</string>
+    <string name="section_preview">Current image</string>
     <string name="section_discovery">Find artwork</string>
     <string name="section_rotation">Automatic changes</string>
-    <string name="zoom_label">Zoom</string>
-    <string name="zoom_value">%1$.1f×</string>
 </resources>

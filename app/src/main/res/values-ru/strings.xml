@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="bg_plugin_description">Арты из Danbooru и Safebooru. Поиск по тегам и смена фона по расписанию.</string>
-    <string name="artwork_preview">Предпросмотр кадра</string>
+    <string name="artwork_preview">Предпросмотр арта</string>
     <string name="empty_preview">Загрузите первый арт</string>
     <string name="tags_label">Теги</string>
     <string name="tags_help">До 8 тегов через пробел. Например: bara male_focus -comic. Все теги обязательны, -тег исключает. Для BL попробуйте shounen_ai.</string>
@@ -51,17 +51,10 @@
     <string name="aspect_label">Пропорции артов</string>
     <string name="aspect_help" formatted="false">Под экран: сохранённый формат с обрезкой до 15%. Он не меняется при сворачивании ClockDesk. Режим «Любые» разрешает и квадратные арты.</string>
     <string name="error_image_aspect">Изображение не подходит по пропорциям.</string>
-    <string name="crop_help">Двигайте арт пальцем. Масштаб меняется двумя пальцами или ползунком. В ClockDesk попадёт кадр внутри рамки.</string>
-    <string name="frame_label">Формат кадра</string>
-    <string name="crop_reset">Сбросить</string>
-    <string name="crop_apply">Применить кадр</string>
-    <string name="crop_dirty">Изменения кадра ещё не применены.</string>
-    <string name="crop_saving">Сохраняем кадр...</string>
+    <string name="preview_help">Обрезка и положение фона настраиваются в ClockDesk.</string>
     <string name="cancel_refresh">Остановить загрузку</string>
     <string name="open_clockdesk">Открыть ClockDesk</string>
-    <string name="clockdesk_missing">Для установки фона нужен ClockDesk. Загружать и кадрировать арты можно и без него.</string>
-    <string name="status_crop_applied">Кадр применён</string>
-    <string name="status_crop_stale">Арт сменился. Настройте новый кадр и примените его.</string>
+    <string name="clockdesk_missing">Для установки фона нужен ClockDesk. Загружать арты можно и без него.</string>
     <string name="status_cancelled">Загрузка остановлена. Текущий фон сохранён.</string>
     <string-array name="rating_options">
         <item>Только SFW</item>
@@ -87,18 +80,8 @@
         <item>Вертикальные</item>
         <item>Любые</item>
     </string-array>
-    <string-array name="frame_options">
-        <item>Формат экрана</item>
-        <item>16:9 горизонтальный</item>
-        <item>9:16 вертикальный</item>
-        <item>4:3 горизонтальный</item>
-        <item>3:4 вертикальный</item>
-        <item>Как у арта</item>
-    </string-array>
     <string name="capture_screen">Использовать размер экрана</string>
-    <string name="section_crop">Кадр</string>
+    <string name="section_preview">Текущий арт</string>
     <string name="section_discovery">Подбор артов</string>
     <string name="section_rotation">Автосмена</string>
-    <string name="zoom_label">Масштаб</string>
-    <string name="zoom_value">%1$.1f×</string>
 </resources>
